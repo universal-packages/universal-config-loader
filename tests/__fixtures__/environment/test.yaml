@@ -1,0 +1,9 @@
+default:
+  pops: yes
+  jest: '{{ JEST_WORKER_ID }}'
+
+development:
+  squash: nop
+
+production:
+  squash: yep
