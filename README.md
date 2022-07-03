@@ -32,7 +32,7 @@ Lets say `./config` looks like this in disk:
 
 ```text
 config
-  |- database.ymal
+  |- database.yaml
   |- redis.json
   |- secrets
       |- api.ymal
@@ -64,8 +64,11 @@ We will end up with something like
 
 ## Options
 
-- **`formatPriority`** `['json' | 'yaml' | 'js' | 'ts']`
+- **`formatPriority`** `['json' | 'yaml' | 'yml' | 'js' | 'ts']`
   If there are 2 files with the same name but with different extension? which one should be prioritized to load?
+
+- **`formatPriority`** `number`
+  How deep should the loader go through directories loading files?
 
 - **`selectEnvironment`** `string`
   If you want your files to be post processed after loaded with a selection of an environment seccion you can specify the name of the environment to select.

@@ -7,13 +7,14 @@ import { FormatPriority, LoadConfigOptions } from './loadConfig.types'
 import { mapObject } from '@universal-packages/object-mapper'
 import { replaceEnv } from '@universal-packages/variable-replacer'
 
-export const EXTENSIONS = ['.json', '.yaml', '.js', '.ts']
+export const EXTENSIONS = ['.json', '.yaml', '.yml', '.js', '.ts']
 
 const PARSERS_MAP = {
   json: parseJson,
   js: loadJs,
   ts: loadJs,
-  yaml: parseYaml
+  yaml: parseYaml,
+  yml: parseYaml
 }
 
 /**
@@ -21,8 +22,8 @@ const PARSERS_MAP = {
  * with the format `ts`, `js`, `json` or `yaml` and with the priority provided.
  */
 export async function loadConfig(location: string, options?: LoadConfigOptions): Promise<any> {
-  const finalOptions: LoadConfigOptions = { formatPriority: ['ts', 'js', 'json', 'yaml'], ...options }
-  const directoryMap = await traverse(location, { fileFilter: EXTENSIONS })
+  const finalOptions: LoadConfigOptions = { formatPriority: ['ts', 'js', 'json', 'yaml', 'yml'], ...options }
+  const directoryMap = await traverse(location, { fileFilter: EXTENSIONS, maxDepth: finalOptions.maxDepth })
   const loadedConfig: any = {}
 
   await recursivelyLoad(directoryMap, finalOptions, loadedConfig)

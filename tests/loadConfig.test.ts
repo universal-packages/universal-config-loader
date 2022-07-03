@@ -2,10 +2,16 @@ import path from 'path'
 import { loadConfig } from '../src'
 
 describe('loadConfig', (): void => {
-  it('loads recorsivley all data structures in a directory', async (): Promise<void> => {
+  it('loads recursively all data structures in a directory', async (): Promise<void> => {
     const config = await loadConfig('./tests/__fixtures__/good')
 
     expect(config).toEqual({
+      out: {
+        priority: {
+          extra: 'yes',
+          loaded: 'outfile'
+        }
+      },
       merged: {
         conf: {
           __root: { conf: { value: 'root' } },
@@ -17,6 +23,19 @@ describe('loadConfig', (): void => {
       priorityB: { priority: { priority: { loaded: 'js', extra: 'nop' } } },
       priorityC: { priority: { priority: { loaded: 'json', extra: 'nop' } } },
       priorityD: { priority: { priority: { loaded: 'yaml', extra: 'nop' } } }
+    })
+  })
+
+  it('can be set a max depth', async (): Promise<void> => {
+    const config = await loadConfig('./tests/__fixtures__/good', { maxDepth: 0 })
+
+    expect(config).toEqual({
+      out: {
+        priority: {
+          extra: 'yes',
+          loaded: 'outfile'
+        }
+      }
     })
   })
 
