@@ -35,7 +35,13 @@ describe('loadConfig', (): void => {
           extra: 'yes',
           loaded: 'outfile'
         }
-      }
+      },
+      merged: {},
+      multiple: {},
+      priorityA: {},
+      priorityB: {},
+      priorityC: {},
+      priorityD: {}
     })
   })
 

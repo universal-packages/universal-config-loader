@@ -64,6 +64,9 @@ We will end up with something like
 
 ## Options
 
+- `callback` `TraverseCallback`
+  A function to pass to the [directory-traversal](https://github.com/universal-packages/universal-directory-traversal), call for every directory mapped, use this to decide if the config loading should continue or modify the directory map before loading files in it.
+
 - **`formatPriority`** `['json' | 'yaml' | 'yml' | 'js' | 'ts']`
   If there are 2 files with the same name but with different extension? which one should be prioritized to load?
 

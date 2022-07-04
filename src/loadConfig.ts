@@ -23,7 +23,7 @@ const PARSERS_MAP = {
  */
 export async function loadConfig(location: string, options?: LoadConfigOptions): Promise<any> {
   const finalOptions: LoadConfigOptions = { formatPriority: ['ts', 'js', 'json', 'yaml', 'yml'], ...options }
-  const directoryMap = await traverse(location, { fileFilter: EXTENSIONS, maxDepth: finalOptions.maxDepth })
+  const directoryMap = await traverse(location, { callback: finalOptions.callback, fileFilter: EXTENSIONS, maxDepth: finalOptions.maxDepth })
   const loadedConfig: any = {}
 
   await recursivelyLoad(directoryMap, finalOptions, loadedConfig)

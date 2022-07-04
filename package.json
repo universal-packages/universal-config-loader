@@ -13,7 +13,7 @@
     "test:full": "jest --coverage --verbose"
   },
   "dependencies": {
-    "@universal-packages/directory-traversal": "^1.0.0",
+    "@universal-packages/directory-traversal": "^1.2.0",
     "@universal-packages/object-mapper": "^1.0.0",
     "@universal-packages/variable-replacer": "^1.0.0",
     "yaml": "^2.1.1"
