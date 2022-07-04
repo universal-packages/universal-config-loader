@@ -1,24 +1,13 @@
-import fs from 'fs'
-import yaml from 'yaml'
 import path from 'path'
 import { traverse, DirectoryMap } from '@universal-packages/directory-traversal'
-import { checkFile } from '@universal-packages/fs-utils'
-import { FormatPriority, LoadConfigOptions } from './loadConfig.types'
-import { mapObject } from '@universal-packages/object-mapper'
-import { replaceEnv } from '@universal-packages/variable-replacer'
+import { LoadConfigOptions } from './loadConfig.types'
+import { prioritizeFormatAndLoad } from './prioritizeFormatAndLoad'
+import { processConfig } from './processConfig'
 
-export const EXTENSIONS = ['.json', '.yaml', '.yml', '.js', '.ts']
-
-const PARSERS_MAP = {
-  json: parseJson,
-  js: loadJs,
-  ts: loadJs,
-  yaml: parseYaml,
-  yml: parseYaml
-}
+export const EXTENSIONS = ['json', 'yaml', 'yml', 'js', 'ts']
 
 /**
- * Traberse the provided configuration in disk and loads the content of all files
+ * Traverse the provided configuration in disk and loads the content of all files
  * with the format `ts`, `js`, `json` or `yaml` and with the priority provided.
  */
 export async function loadConfig(location: string, options?: LoadConfigOptions): Promise<any> {
@@ -29,49 +18,6 @@ export async function loadConfig(location: string, options?: LoadConfigOptions):
   await recursivelyLoad(directoryMap, finalOptions, loadedConfig)
 
   return loadedConfig
-}
-
-/** Reads the contents of the file and try to parse them from JSON */
-async function parseJson(location: string): Promise<any> {
-  try {
-    return JSON.parse(fs.readFileSync(location).toString())
-  } catch (error) {
-    error.message = `${error.message}; in file "${location}"`
-
-    throw error
-  }
-}
-
-/** Reads the contents of the file and try to parse them from yml */
-async function parseYaml(location: string): Promise<any> {
-  try {
-    return yaml.parse(fs.readFileSync(location).toString())
-  } catch (error) {
-    error.message = `${error.message}; in file "${location}"`
-
-    throw error
-  }
-}
-
-/** Imports the file as a node module */
-async function loadJs(location: string): Promise<any> {
-  const module = await import(location)
-
-  return module['default']
-}
-
-async function prioritizeFormatAndLoad(base: string, formatPriority: FormatPriority): Promise<any> {
-  for (let i = 0; i < formatPriority.length; i++) {
-    let finalLocation: string
-
-    try {
-      finalLocation = checkFile(`${base}.${formatPriority[i]}`)
-    } catch {
-      continue
-    }
-
-    return await PARSERS_MAP[formatPriority[i]](finalLocation)
-  }
 }
 
 /**
@@ -96,7 +42,7 @@ async function recursivelyLoad(directoryMap: DirectoryMap, options: LoadConfigOp
       // "home/example/config"
       const baseLocation = path.resolve(directoryLocation, baseFileName)
       const loadedFromFile = await prioritizeFormatAndLoad(baseLocation, options.formatPriority)
-      const finalConfig = processConfig(loadedFromFile, options)
+      const finalConfig = processConfig({ ...loadedFromFile }, options.selectEnvironment)
 
       rootConfig[baseFileName] = finalConfig
 
@@ -124,26 +70,4 @@ async function recursivelyLoad(directoryMap: DirectoryMap, options: LoadConfigOp
 
     await recursivelyLoad(directoryMap.directories[i], options, rootConfig[name])
   }
-}
-
-/** Process loaded configuration replaces env variables and selects configurations by environment */
-function processConfig(baseConfig: any, options: LoadConfigOptions): any {
-  const configKeys = Object.keys(baseConfig)
-  let finalConfig: any = {}
-
-  // If configured select an environment from the loaded from file config
-  if (options.selectEnvironment) {
-    if (configKeys.includes('default') || configKeys.includes(options.selectEnvironment)) {
-      finalConfig = { ...baseConfig.default, ...baseConfig[options.selectEnvironment] }
-    }
-  } else {
-    finalConfig = baseConfig
-  }
-
-  // Map final options and replace values with env variables
-  mapObject(finalConfig, null, (value: any): string => {
-    if (typeof value === 'string') return replaceEnv(value)
-  })
-
-  return finalConfig
 }

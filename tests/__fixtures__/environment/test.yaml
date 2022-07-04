@@ -1,6 +1,6 @@
 default:
   pops: yes
-  jest: '{{ JEST_WORKER_ID }}'
+  env: '{{ NODE_ENV }}'
 
 development:
   squash: nop

@@ -70,9 +70,6 @@ We will end up with something like
 - **`formatPriority`** `['json' | 'yaml' | 'yml' | 'js' | 'ts']`
   If there are 2 files with the same name but with different extension? which one should be prioritized to load?
 
-- **`formatPriority`** `number`
-  How deep should the loader go through directories loading files?
-
 - **`selectEnvironment`** `string`
   If you want your files to be post processed after loaded with a selection of an environment seccion you can specify the name of the environment to select.
 
@@ -111,6 +108,32 @@ We will end up with something like
     }
   }
   ```
+
+## loadFileConfig()
+
+Given a base file location it prioritizes and loads the file content into a plain old javascript object.
+
+Example if there are two files `jest.js` and `jest.yml` in your root directory the following script will load the `jest.js` contents over the `jest.yml` ones.
+
+```js
+import { loadFileconfig } from '@universal-packages/config-loader'
+
+async function test() {
+  const config = await loadconfig('./jest', { formatpriority: ['js', 'yml'] })
+
+  console.log(config)
+}
+
+test()
+```
+
+## Options
+
+- **`formatPriority`** `['json' | 'yaml' | 'yml' | 'js' | 'ts']`
+  If there are 2 files with the same name but with different extension? which one should be prioritized to load?
+
+- **`selectEnvironment`** `string`
+  If you want your files to be post processed after loaded with a selection of an environment seccion you can specify the name of the environment to select.
 
 ## Environment variables
 

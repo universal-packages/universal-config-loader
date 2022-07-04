@@ -1,3 +1,4 @@
 priority:
   loaded: outfile
   extra: yes
+  nodeEnv: '{{ NODE_ENV }}'

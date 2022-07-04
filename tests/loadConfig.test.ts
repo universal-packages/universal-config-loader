@@ -9,7 +9,8 @@ describe('loadConfig', (): void => {
       out: {
         priority: {
           extra: 'yes',
-          loaded: 'outfile'
+          loaded: 'outfile',
+          nodeEnv: 'test'
         }
       },
       merged: {
@@ -33,7 +34,8 @@ describe('loadConfig', (): void => {
       out: {
         priority: {
           extra: 'yes',
-          loaded: 'outfile'
+          loaded: 'outfile',
+          nodeEnv: 'test'
         }
       },
       merged: {},
@@ -51,7 +53,7 @@ describe('loadConfig', (): void => {
     expect(config).toEqual({
       test: {
         pops: 'yes',
-        jest: '1',
+        env: 'test',
         squash: 'nop'
       }
     })
@@ -61,7 +63,7 @@ describe('loadConfig', (): void => {
     expect(config).toEqual({
       test: {
         pops: 'yes',
-        jest: '1',
+        env: 'test',
         squash: 'yep'
       }
     })
