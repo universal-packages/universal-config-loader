@@ -6,7 +6,6 @@ import { processConfig } from './processConfig'
 export async function loadFileConfig(location: string, options?: LoadFileConfigOptions): Promise<any> {
   const finalOptions: LoadFileConfigOptions = { formatPriority: ['ts', 'js', 'json', 'yaml', 'yml'], ...options }
   const loadedConfig = await prioritizeFormatAndLoad(location, finalOptions.formatPriority)
-  const finalConfig = processConfig({ ...loadedConfig }, finalOptions.selectEnvironment)
 
-  return finalConfig
+  if (loadedConfig) return processConfig(loadedConfig, finalOptions.selectEnvironment)
 }
