@@ -67,6 +67,16 @@ describe('loadConfig', (): void => {
         squash: 'yep'
       }
     })
+
+    config = await loadConfig('./tests/__fixtures__/environment', { selectEnvironment: true })
+
+    expect(config).toEqual({
+      test: {
+        pops: 'yes',
+        env: 'test',
+        squash: 'maybe'
+      }
+    })
   })
 
   it('throws errors from files', async (): Promise<void> => {

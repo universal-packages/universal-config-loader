@@ -70,14 +70,14 @@ We will end up with something like
 - **`formatPriority`** `['json' | 'yaml' | 'yml' | 'js' | 'ts']`
   If there are 2 files with the same name but with different extension? which one should be prioritized to load?
 
-- **`selectEnvironment`** `string`
-  If you want your files to be post processed after loaded with a selection of an environment seccion you can specify the name of the environment to select.
+- **`selectEnvironment`** `string | boolean`
+  If you want your files to be post processed after loaded with a selection of an environment seccion you can specify the name of the environment to select or pass `true` to automatically set from `NODE_ENV`.
 
   ```js
   import { loadconfig } from '@universal-packages/config-loader'
 
   async function test() {
-    const config = await loadconfig('./config', { selectEnvironment: 'development' })
+    const config = await loadconfig('./config', { selectEnvironment: 'staging' })
 
     console.log(config)
   }

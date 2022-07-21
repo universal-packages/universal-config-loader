@@ -7,3 +7,6 @@ development:
 
 production:
   squash: yep
+
+test:
+  squash: maybe

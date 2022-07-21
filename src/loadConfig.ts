@@ -42,7 +42,7 @@ async function recursivelyLoad(directoryMap: DirectoryMap, options: LoadConfigOp
       // "home/example/config"
       const baseLocation = path.resolve(directoryLocation, baseFileName)
       const loadedFromFile = await prioritizeFormatAndLoad(baseLocation, options.formatPriority)
-      const finalConfig = processConfig({ ...loadedFromFile }, options.selectEnvironment)
+      const finalConfig = processConfig({ ...loadedFromFile }, options.selectEnvironment === true ? process.env['NODE_ENV'] : options.selectEnvironment)
 
       rootConfig[baseFileName] = finalConfig
 

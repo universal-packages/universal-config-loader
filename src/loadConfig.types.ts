@@ -7,5 +7,5 @@ export interface LoadConfigOptions {
   callback?: TraverseCallback
   formatPriority?: FormatPriority
   maxDepth?: number
-  selectEnvironment?: string
+  selectEnvironment?: string | true
 }
