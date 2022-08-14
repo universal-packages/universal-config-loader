@@ -7,5 +7,5 @@ export async function loadFileConfig(location: string, options?: LoadFileConfigO
   const finalOptions: LoadFileConfigOptions = { formatPriority: ['ts', 'js', 'json', 'yaml', 'yml'], ...options }
   const loadedConfig = await prioritizeFormatAndLoad(location, finalOptions.formatPriority)
 
-  if (loadedConfig) return processConfig(loadedConfig, finalOptions.selectEnvironment)
+  if (loadedConfig) return processConfig(loadedConfig, finalOptions.selectEnvironment === true ? process.env['NODE_ENV'] : finalOptions.selectEnvironment)
 }
