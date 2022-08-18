@@ -54,6 +54,7 @@ describe('loadConfig', (): void => {
       test: {
         pops: 'yes',
         env: 'test',
+        deep: { value: 1, test: 3 },
         squash: 'nop'
       }
     })
@@ -61,11 +62,7 @@ describe('loadConfig', (): void => {
     config = await loadConfig('./tests/__fixtures__/environment', { selectEnvironment: 'production' })
 
     expect(config).toEqual({
-      test: {
-        pops: 'yes',
-        env: 'test',
-        squash: 'yep'
-      }
+      test: { pops: 'yes', env: 'test', deep: { value: 1 }, squash: 'yep' }
     })
 
     config = await loadConfig('./tests/__fixtures__/environment', { selectEnvironment: true })
@@ -74,6 +71,7 @@ describe('loadConfig', (): void => {
       test: {
         pops: 'yes',
         env: 'test',
+        deep: { value: 1, test: 2 },
         squash: 'maybe'
       }
     })

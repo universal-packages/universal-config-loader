@@ -1,12 +1,19 @@
 default:
   pops: yes
   env: '{{ NODE_ENV }}'
+  deep:
+    value: 1
 
 development:
   squash: nop
+  deep:
+    test: 3
+
 
 production:
   squash: yep
 
 test:
   squash: maybe
+  deep:
+    test: 2
