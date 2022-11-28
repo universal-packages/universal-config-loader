@@ -17,10 +17,10 @@ npm install @universal-packages/config-loader
 Given a configuration location reads deeply into it and get all the contents of the configuration files there into a plain old javascript object.
 
 ```js
-import { loadconfig } from '@universal-packages/config-loader'
+import { loadConfig } from '@universal-packages/config-loader'
 
 async function test() {
-  const config = await loadconfig('./config')
+  const config = await loadConfig('./config')
 
   console.log(config)
 }
@@ -35,7 +35,7 @@ config
   |- database.yaml
   |- redis.json
   |- secrets
-      |- api.ymal
+      |- api.yaml
       |- github.js
 ```
 
@@ -71,13 +71,13 @@ We will end up with something like
   If there are 2 files with the same name but with different extension? which one should be prioritized to load?
 
 - **`selectEnvironment`** `string | boolean`
-  If you want your files to be post processed after loaded with a selection of an environment seccion you can specify the name of the environment to select or pass `true` to automatically set from `NODE_ENV`.
+  If you want your files to be post processed after loaded with a selection of an environment section you can specify the name of the environment to select or pass `true` to automatically set from `NODE_ENV`.
 
   ```js
-  import { loadconfig } from '@universal-packages/config-loader'
+  import { loadConfig } from '@universal-packages/config-loader'
 
   async function test() {
-    const config = await loadconfig('./config', { selectEnvironment: 'staging' })
+    const config = await loadConfig('./config', { selectEnvironment: 'staging' })
 
     console.log(config)
   }
@@ -88,7 +88,7 @@ We will end up with something like
   Lets say `./config/redis.yaml` looks like this:
 
   ```yaml
-  defaulf:
+  default:
     port: 6380
   development:
     host: localhost
@@ -116,10 +116,10 @@ Given a base file location it prioritizes and loads the file content into a plai
 Example if there are two files `jest.js` and `jest.yml` in your root directory the following script will load the `jest.js` contents over the `jest.yml` ones.
 
 ```js
-import { loadFileconfig } from '@universal-packages/config-loader'
+import { loadFileConfig } from '@universal-packages/config-loader'
 
 async function test() {
-  const config = await loadconfig('./jest', { formatpriority: ['js', 'yml'] })
+  const config = await loadConfig('./jest', { formatPriority: ['js', 'yml'] })
 
   console.log(config)
 }
@@ -133,7 +133,7 @@ test()
   If there are 2 files with the same name but with different extension? which one should be prioritized to load?
 
 - **`selectEnvironment`** `string`
-  If you want your files to be post processed after loaded with a selection of an environment seccion you can specify the name of the environment to select.
+  If you want your files to be post processed after loaded with a selection of an environment section you can specify the name of the environment to select.
 
 ## Environment variables
 
@@ -142,7 +142,7 @@ Config loader will try to match strings inside the configuration files with a re
 Lets say `./config/redis.yaml` looks like this:
 
 ```yaml
-defaulf:
+default:
   port: 6380
 development:
   host: localhost
@@ -168,7 +168,7 @@ This library is developed in TypeScript and shipped fully typed.
 
 ## Contributing
 
-The development of this library in the open on GitHub, and we are grateful to the community for contributing bugfixes and improvements. Read below to learn how you can take part in improving this library.
+The development of this library happens in the open on GitHub, and we are grateful to the community for contributing bugfixes and improvements. Read below to learn how you can take part in improving this library.
 
 - [Code of Conduct](./CODE_OF_CONDUCT.md)
 - [Contributing Guide](./CONTRIBUTING.md)

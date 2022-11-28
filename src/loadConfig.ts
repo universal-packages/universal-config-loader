@@ -27,12 +27,12 @@ export async function loadConfig(location: string, options?: LoadConfigOptions):
 async function recursivelyLoad(directoryMap: DirectoryMap, options: LoadConfigOptions, rootConfig: any): Promise<any> {
   const namesUsed: string[] = []
 
-  // First we go throgh all files in the directory befor going deeper
+  // First we go through all files in the directory before going deeper
   for (let i = 0; i < directoryMap.files.length; i++) {
     // Get just the file name: "/home/example/config.json" --> "config"
     const baseFileName = path.basename(directoryMap.files[i]).replace(/\.[^/.]+$/, '')
 
-    // Here starts the prioretization if in this directory this name has alredy been prioritized by prioritizeFormatAndLoad
+    // Here starts the prioritization if in this directory this name has already been prioritized by prioritizeFormatAndLoad
     // we are just interested in the baseFileName, prioritizeFormatAndLoad will try to load baseFileName.ts, baseFileName.json.. etc
     // but using the priority array, like if the priority says ts is the first to prioritize the we first load baseFileName.ts and
     // if it loads the we stop for other formats
@@ -56,8 +56,8 @@ async function recursivelyLoad(directoryMap: DirectoryMap, options: LoadConfigOp
   for (let i = 0; i < directoryMap.directories.length; i++) {
     const name = path.basename(directoryMap.directories[i].path)
 
-    // If we already loaded a cofig file with the same name as the directory
-    // we resque that configuration as __root instead of just overide it with
+    // If we already loaded a config file with the same name as the directory
+    // we rescue that configuration as __root instead of just override it with
     // a new directory section
     if (rootConfig[name]) {
       const preConfig = rootConfig[name]
