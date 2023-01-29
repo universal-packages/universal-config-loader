@@ -1,6 +1,6 @@
 {
   "name": "@universal-packages/config-loader",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "description": "Configuration over convention, wait... no, the other way around, right?",
   "author": "David De Anda <david@universal-packages.com> (https://github.com/universal-packages)",
   "license": "MIT",
