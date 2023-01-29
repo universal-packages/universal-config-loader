@@ -4,7 +4,7 @@
 [![Testing](https://github.com/universal-packages/universal-config-loader/actions/workflows/testing.yml/badge.svg)](https://github.com/universal-packages/universal-config-loader/actions/workflows/testing.yml)
 [![codecov](https://codecov.io/gh/universal-packages/universal-config-loader/branch/main/graph/badge.svg?token=CXPJSN8IGL)](https://codecov.io/gh/universal-packages/universal-config-loader)
 
-Get ready to load all the configuration into a single plane old javascript object from any directory and with file format priority, defaults and overiting.
+Get ready to load all the configuration into a single plane old javascript object from any directory and with file format priority, defaults and overwriting.
 
 ## Install
 
@@ -12,7 +12,9 @@ Get ready to load all the configuration into a single plane old javascript objec
 npm install @universal-packages/config-loader
 ```
 
-## loadConfig()
+## Global methods
+
+#### **`loadConfig(location: string, [options])`**
 
 Given a configuration location reads deeply into it and get all the contents of the configuration files there into a plain old javascript object.
 
@@ -62,7 +64,7 @@ We will end up with something like
 }
 ```
 
-## Options
+### Options
 
 - `callback` `TraverseCallback`
   A function to pass to the [directory-traversal](https://github.com/universal-packages/universal-directory-traversal), call for every directory mapped, use this to decide if the config loading should continue or modify the directory map before loading files in it.
@@ -109,7 +111,7 @@ We will end up with something like
   }
   ```
 
-## loadFileConfig()
+#### **`loadFileConfig(location: string, [options])`**
 
 Given a base file location it prioritizes and loads the file content into a plain old javascript object.
 
@@ -127,7 +129,7 @@ async function test() {
 test()
 ```
 
-## Options
+### Options
 
 - **`formatPriority`** `['json' | 'yaml' | 'yml' | 'js' | 'ts']`
   If there are 2 files with the same name but with different extension? which one should be prioritized to load?
