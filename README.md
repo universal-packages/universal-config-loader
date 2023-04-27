@@ -75,6 +75,9 @@ We will end up with something like
 - **`selectEnvironment`** `string | boolean`
   If you want your files to be post processed after loaded with a selection of an environment section you can specify the name of the environment to select or pass `true` to automatically set from `NODE_ENV`.
 
+- **`cleanOrphanReplaceable`** `boolean`
+  Replaceable strings that are not found in the environment variables will be removed from the final values.
+
   ```js
   import { loadConfig } from '@universal-packages/config-loader'
 
@@ -136,6 +139,9 @@ test()
 
 - **`selectEnvironment`** `string`
   If you want your files to be post processed after loaded with a selection of an environment section you can specify the name of the environment to select.
+
+- **`cleanOrphanReplaceable`** `boolean`
+  Replaceable strings that are not found in the environment variables will be removed from the final values.
 
 ## Environment variables
 

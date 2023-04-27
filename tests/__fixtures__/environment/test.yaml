@@ -1,6 +1,7 @@
 default:
   pops: yes
   env: '{{ NODE_ENV }}'
+  other: '{{ OTHER }}'
   deep:
     value: 1
 

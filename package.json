@@ -15,10 +15,10 @@
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json}\""
   },
   "dependencies": {
-    "@universal-packages/directory-traversal": "1.2.1",
-    "@universal-packages/object-mapper": "1.1.1",
-    "@universal-packages/variable-replacer": "1.0.1",
-    "yaml": "^2.1.1"
+    "@universal-packages/directory-traversal": "^1.2.1",
+    "@universal-packages/object-mapper": "^1.1.2",
+    "@universal-packages/variable-replacer": "^1.1.0",
+    "yaml": "^2.2.2"
   },
   "devDependencies": {
     "@types/jest": "^28.1.0",

@@ -1,8 +1,8 @@
 import { mapObject } from '@universal-packages/object-mapper'
-import { replaceEnv } from '@universal-packages/variable-replacer'
+import { cleanOrphanReplaceable as cOR, replaceEnv } from '@universal-packages/variable-replacer'
 
 /** Process loaded configuration replaces env variables and selects configurations by environment */
-export function processConfig(baseConfig: any, environment?: string): any {
+export function processConfig(baseConfig: any, cleanOrphanReplaceable?: boolean, environment?: string): any {
   const configKeys = Object.keys(baseConfig)
   let finalConfig: any = baseConfig
 
@@ -15,7 +15,14 @@ export function processConfig(baseConfig: any, environment?: string): any {
 
   // Map final options and replace values with env variables
   mapObject(finalConfig, null, (value: any): string => {
-    if (typeof value === 'string') return replaceEnv(value)
+    let finalValue = value
+
+    if (typeof value === 'string') {
+      finalValue = replaceEnv(finalValue)
+      if (cleanOrphanReplaceable) finalValue = cOR(finalValue)
+    }
+
+    return finalValue
   })
 
   return finalConfig
