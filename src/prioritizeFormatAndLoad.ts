@@ -1,6 +1,7 @@
+import { checkFile } from '@universal-packages/fs-utils'
 import fs from 'fs'
 import yaml from 'yaml'
-import { checkFile } from '@universal-packages/fs-utils'
+
 import { FormatPriority } from './loadConfig.types'
 
 const PARSERS_MAP = {

@@ -1,4 +1,5 @@
 import path from 'path'
+
 import { loadFileConfig } from '../src'
 
 describe('loadFileConfig', (): void => {
