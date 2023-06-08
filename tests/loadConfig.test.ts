@@ -7,6 +7,25 @@ describe('loadConfig', (): void => {
     const config = await loadConfig('./tests/__fixtures__/good')
 
     expect(config).toEqual({
+      'convention-prefix': {
+        deep: {
+          'match.prefix': {
+            match: true
+          },
+          other: {
+            other: true
+          }
+        },
+        'match1.prefix': {
+          match: true
+        },
+        'match2.prefix': {
+          match: true
+        },
+        other: {
+          other: true
+        }
+      },
       out: {
         priority: {
           extra: 'yes',
@@ -28,10 +47,37 @@ describe('loadConfig', (): void => {
     })
   })
 
+  it('loads recursively all data structures in a directory with a prefix', async (): Promise<void> => {
+    const config = await loadConfig('./tests/__fixtures__/good', { conventionPrefix: 'prefix' })
+
+    expect(config).toEqual({
+      'convention-prefix': {
+        deep: {
+          'match.prefix': {
+            match: true
+          }
+        },
+        'match1.prefix': {
+          match: true
+        },
+        'match2.prefix': {
+          match: true
+        }
+      },
+      merged: { conf: {} },
+      multiple: {},
+      priorityA: {},
+      priorityB: {},
+      priorityC: {},
+      priorityD: {}
+    })
+  })
+
   it('can be set a max depth', async (): Promise<void> => {
     const config = await loadConfig('./tests/__fixtures__/good', { maxDepth: 0 })
 
     expect(config).toEqual({
+      'convention-prefix': {},
       out: {
         priority: {
           extra: 'yes',

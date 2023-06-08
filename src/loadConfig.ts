@@ -13,7 +13,9 @@ export const EXTENSIONS = ['json', 'yaml', 'yml', 'js', 'ts']
  */
 export async function loadConfig(location: string, options?: LoadConfigOptions): Promise<any> {
   const finalOptions: LoadConfigOptions = { formatPriority: ['ts', 'js', 'json', 'yaml', 'yml'], ...options }
-  const directoryMap = await traverse(location, { callback: finalOptions.callback, fileFilter: EXTENSIONS, maxDepth: finalOptions.maxDepth })
+  const fileFilter = finalOptions.conventionPrefix ? new RegExp(`\.${finalOptions.conventionPrefix}\.(${EXTENSIONS.join('|')})$`, 'gm') : EXTENSIONS
+
+  const directoryMap = await traverse(location, { callback: finalOptions.callback, fileFilter, maxDepth: finalOptions.maxDepth })
   const loadedConfig: any = {}
 
   await recursivelyLoad(directoryMap, finalOptions, loadedConfig)

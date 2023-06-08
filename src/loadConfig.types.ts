@@ -6,6 +6,7 @@ export type FormatPriority = Format[]
 export interface LoadConfigOptions {
   callback?: TraverseCallback
   cleanOrphanReplaceable?: boolean
+  conventionPrefix?: string
   formatPriority?: FormatPriority
   maxDepth?: number
   selectEnvironment?: string | true
