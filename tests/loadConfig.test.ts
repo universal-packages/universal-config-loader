@@ -2,7 +2,7 @@ import path from 'path'
 
 import { loadConfig } from '../src'
 
-describe('loadConfig', (): void => {
+describe(loadConfig, (): void => {
   it('loads recursively all data structures in a directory', async (): Promise<void> => {
     const config = await loadConfig('./tests/__fixtures__/good')
 
