@@ -144,7 +144,7 @@ test()
   Replaceable strings that are not found in the environment variables will be removed from the final values.
 
 - **`defaultConfig`** `Object`
-  Use to fill config that may not be present in the configuration files.
+  Use to fill config that may not be present in the configuration file.
 
 - **`formatPriority`** `['json' | 'yaml' | 'yml' | 'js' | 'ts']`
   If there are 2 files with the same name but with different extension? which one should be prioritized to load?
