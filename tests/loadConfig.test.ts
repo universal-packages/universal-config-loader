@@ -98,7 +98,7 @@ describe(loadConfig, (): void => {
     let config = await loadConfig('./tests/__fixtures__/environment', { selectEnvironment: 'development' })
 
     expect(config).toEqual({
-      test: {
+      environment: {
         pops: 'yes',
         env: 'test',
         other: '{{ OTHER }}',
@@ -110,13 +110,13 @@ describe(loadConfig, (): void => {
     config = await loadConfig('./tests/__fixtures__/environment', { selectEnvironment: 'production' })
 
     expect(config).toEqual({
-      test: { pops: 'yes', env: 'test', other: '{{ OTHER }}', deep: { value: 1 }, squash: 'yep' }
+      environment: { pops: 'yes', env: 'test', other: '{{ OTHER }}', deep: { value: 1 }, squash: 'yep' }
     })
 
     config = await loadConfig('./tests/__fixtures__/environment', { selectEnvironment: true })
 
     expect(config).toEqual({
-      test: {
+      environment: {
         pops: 'yes',
         env: 'test',
         other: '{{ OTHER }}',
@@ -126,11 +126,26 @@ describe(loadConfig, (): void => {
     })
   })
 
+  it('uses a default config to merge with the loaded one', async (): Promise<void> => {
+    const config = await loadConfig('./tests/__fixtures__/environment', { selectEnvironment: 'development', defaultConfig: { environment: { load: true, pops: 'what' } } })
+
+    expect(config).toEqual({
+      environment: {
+        load: true,
+        pops: 'yes',
+        env: 'test',
+        other: '{{ OTHER }}',
+        deep: { value: 1, test: 3 },
+        squash: 'nop'
+      }
+    })
+  })
+
   it('loads config and cleans orphaned replaceable', async (): Promise<void> => {
     let config = await loadConfig('./tests/__fixtures__/environment', { cleanOrphanReplaceable: true, selectEnvironment: 'development' })
 
     expect(config).toEqual({
-      test: {
+      environment: {
         pops: 'yes',
         env: 'test',
         other: '',

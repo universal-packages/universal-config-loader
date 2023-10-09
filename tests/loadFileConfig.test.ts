@@ -16,7 +16,7 @@ describe(loadFileConfig, (): void => {
   })
 
   it(' selects an environment', async (): Promise<void> => {
-    let config = await loadFileConfig('./tests/__fixtures__/environment/test', { selectEnvironment: 'development' })
+    let config = await loadFileConfig('./tests/__fixtures__/environment/environment', { selectEnvironment: 'development' })
 
     expect(config).toEqual({
       pops: 'yes',
@@ -26,11 +26,38 @@ describe(loadFileConfig, (): void => {
       squash: 'nop'
     })
 
-    config = await loadFileConfig('./tests/__fixtures__/environment/test', { selectEnvironment: 'production' })
+    config = await loadFileConfig('./tests/__fixtures__/environment/environment', { selectEnvironment: 'production' })
 
     expect(config).toEqual({ pops: 'yes', env: 'test', other: '{{ OTHER }}', deep: { value: 1 }, squash: 'yep' })
 
-    config = await loadFileConfig('./tests/__fixtures__/environment/test', { selectEnvironment: true })
+    config = await loadFileConfig('./tests/__fixtures__/environment/environment', { selectEnvironment: true })
+
+    expect(config).toEqual({
+      pops: 'yes',
+      env: 'test',
+      other: '{{ OTHER }}',
+      deep: { value: 1, test: 2 },
+      squash: 'maybe'
+    })
+  })
+
+  it('uses a default config to merge with the loaded one', async (): Promise<void> => {
+    let config = await loadFileConfig('./tests/__fixtures__/environment/environment', { selectEnvironment: 'development', defaultConfig: { load: true, pops: 'what' } })
+
+    expect(config).toEqual({
+      load: true,
+      pops: 'yes',
+      env: 'test',
+      other: '{{ OTHER }}',
+      deep: { value: 1, test: 3 },
+      squash: 'nop'
+    })
+
+    config = await loadFileConfig('./tests/__fixtures__/environment/environment', { selectEnvironment: 'production' })
+
+    expect(config).toEqual({ pops: 'yes', env: 'test', other: '{{ OTHER }}', deep: { value: 1 }, squash: 'yep' })
+
+    config = await loadFileConfig('./tests/__fixtures__/environment/environment', { selectEnvironment: true })
 
     expect(config).toEqual({
       pops: 'yes',
@@ -42,7 +69,7 @@ describe(loadFileConfig, (): void => {
   })
 
   it('loads config and cleans orphaned replaceable', async (): Promise<void> => {
-    const config = await loadFileConfig('./tests/__fixtures__/environment/test', { cleanOrphanReplaceable: true, selectEnvironment: 'development' })
+    const config = await loadFileConfig('./tests/__fixtures__/environment/environment', { cleanOrphanReplaceable: true, selectEnvironment: 'development' })
 
     expect(config).toEqual({
       pops: 'yes',

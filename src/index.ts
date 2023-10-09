@@ -1,3 +1,4 @@
+export * from './deepMergeConfig'
 export * from './loadConfig'
 export * from './loadConfig.types'
 export * from './loadFileConfig'

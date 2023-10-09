@@ -66,17 +66,8 @@ We will end up with something like
 
 ### Options
 
-- `callback` `TraverseCallback`
+- **`callback`** `TraverseCallback`
   A function to pass to the [directory-traversal](https://github.com/universal-packages/universal-directory-traversal), call for every directory mapped, use this to decide if the config loading should continue or modify the directory map before loading files in it.
-
-- **`formatPriority`** `['json' | 'yaml' | 'yml' | 'js' | 'ts']`
-  If there are 2 files with the same name but with different extension? which one should be prioritized to load?
-
-- **`selectEnvironment`** `string | boolean`
-  If you want your files to be post processed after loaded with a selection of an environment section you can specify the name of the environment to select or pass `true` to automatically set from `NODE_ENV`.
-
-- **`conventionPrefix`** `string`
-  If you want to use `.config.<ext>` as a prefix for your files you can set this option to `config`.
 
 - **`cleanOrphanReplaceable`** `boolean`
   Replaceable strings that are not found in the environment variables will be removed from the final values.
@@ -117,6 +108,18 @@ We will end up with something like
   }
   ```
 
+- **`conventionPrefix`** `string`
+  If you want to use `.config.<ext>` as a prefix for your files you can set this option to `config`.
+
+- **`defaultConfig`** `Object`
+  Use to fill config that may not be present in the configuration files.
+
+- **`formatPriority`** `['json' | 'yaml' | 'yml' | 'js' | 'ts']`
+  If there are 2 files with the same name but with different extension? which one should be prioritized to load?
+
+- **`selectEnvironment`** `string | boolean`
+  If you want your files to be post processed after loaded with a selection of an environment section you can specify the name of the environment to select or pass `true` to automatically set from `NODE_ENV`.
+
 #### **`loadFileConfig(location: string, [options])`**
 
 Given a base file location it prioritizes and loads the file content into a plain old javascript object.
@@ -137,14 +140,17 @@ test()
 
 ### Options
 
+- **`cleanOrphanReplaceable`** `boolean`
+  Replaceable strings that are not found in the environment variables will be removed from the final values.
+
+- **`defaultConfig`** `Object`
+  Use to fill config that may not be present in the configuration files.
+
 - **`formatPriority`** `['json' | 'yaml' | 'yml' | 'js' | 'ts']`
   If there are 2 files with the same name but with different extension? which one should be prioritized to load?
 
 - **`selectEnvironment`** `string`
   If you want your files to be post processed after loaded with a selection of an environment section you can specify the name of the environment to select.
-
-- **`cleanOrphanReplaceable`** `boolean`
-  Replaceable strings that are not found in the environment variables will be removed from the final values.
 
 ## Environment variables
 

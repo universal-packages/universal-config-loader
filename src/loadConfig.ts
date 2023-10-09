@@ -1,6 +1,7 @@
 import { DirectoryMap, traverse } from '@universal-packages/directory-traversal'
 import path from 'path'
 
+import { deepMergeConfig } from './deepMergeConfig'
 import { LoadConfigOptions } from './loadConfig.types'
 import { prioritizeFormatAndLoad } from './prioritizeFormatAndLoad'
 import { processConfig } from './processConfig'
@@ -20,7 +21,7 @@ export async function loadConfig(location: string, options?: LoadConfigOptions):
 
   await recursivelyLoad(directoryMap, finalOptions, loadedConfig)
 
-  return loadedConfig
+  return finalOptions.defaultConfig ? deepMergeConfig(finalOptions.defaultConfig, loadedConfig) : loadedConfig
 }
 
 /**
