@@ -105,7 +105,7 @@ describe(loadFileConfig, (): void => {
       error = err
     }
 
-    expect(error.message).toEqual(`Unexpected token $ in JSON at position 0; in file "${path.resolve('./tests/__fixtures__/bad/json/error.json')}"`)
+    expect(error.message).toEqual(`Unexpected token '$', \"$\" is not valid JSON; in file "${path.resolve('./tests/__fixtures__/bad/json/error.json')}"`)
 
     try {
       await loadFileConfig('./tests/__fixtures__/bad/yaml/error')
