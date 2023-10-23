@@ -111,9 +111,6 @@ We will end up with something like
 - **`conventionPrefix`** `string`
   If you want to use `.config.<ext>` as a prefix for your files you can set this option to `config`.
 
-- **`defaultConfig`** `Object`
-  Use to fill config that may not be present in the configuration files.
-
 - **`formatPriority`** `['json' | 'yaml' | 'yml' | 'js' | 'ts']`
   If there are 2 files with the same name but with different extension? which one should be prioritized to load?
 
@@ -142,9 +139,6 @@ test()
 
 - **`cleanOrphanReplaceable`** `boolean`
   Replaceable strings that are not found in the environment variables will be removed from the final values.
-
-- **`defaultConfig`** `Object`
-  Use to fill config that may not be present in the configuration file.
 
 - **`formatPriority`** `['json' | 'yaml' | 'yml' | 'js' | 'ts']`
   If there are 2 files with the same name but with different extension? which one should be prioritized to load?
@@ -177,6 +171,41 @@ We will end up with something like if `REDIS_HOST` is set with `www.redis.com`
     "post": 6380
   }
 }
+```
+
+#### **`deepMergeConfig(target: Object, [...sources])`**
+
+It will merge all the sources into the target config object deeply.
+
+```js
+import { deepMergeConfig } from '@universal-packages/config-loader'
+
+const target = {
+  a: {
+    b: {
+      c: 1
+    }
+  }
+}
+
+const source = {
+  a: {
+    b: {
+      d: 2
+    }
+  }
+}
+
+const result = deepMergeConfig(target, source)
+
+// result = {
+//   a: {
+//     b: {
+//       c: 1,
+//       d: 2,
+//     },
+//   },
+// }
 ```
 
 ## Typescript

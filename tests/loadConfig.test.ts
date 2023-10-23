@@ -126,21 +126,6 @@ describe(loadConfig, (): void => {
     })
   })
 
-  it('uses a default config to merge with the loaded one', async (): Promise<void> => {
-    const config = await loadConfig('./tests/__fixtures__/environment', { selectEnvironment: 'development', defaultConfig: { environment: { load: true, pops: 'what' } } })
-
-    expect(config).toEqual({
-      environment: {
-        load: true,
-        pops: 'yes',
-        env: 'test',
-        other: '{{ OTHER }}',
-        deep: { value: 1, test: 3 },
-        squash: 'nop'
-      }
-    })
-  })
-
   it('loads config and cleans orphaned replaceable', async (): Promise<void> => {
     let config = await loadConfig('./tests/__fixtures__/environment', { cleanOrphanReplaceable: true, selectEnvironment: 'development' })
 

@@ -7,7 +7,6 @@ export interface LoadConfigOptions {
   callback?: TraverseCallback
   cleanOrphanReplaceable?: boolean
   conventionPrefix?: string
-  defaultConfig?: Record<string, any>
   formatPriority?: FormatPriority
   maxDepth?: number
   selectEnvironment?: string | true
