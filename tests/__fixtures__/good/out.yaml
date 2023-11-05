@@ -2,3 +2,4 @@ priority:
   loaded: outfile
   extra: yes
   nodeEnv: '{{ NODE_ENV }}'
+  evaluation: <% 4000 + {{ JEST_WORKER_ID }} %>

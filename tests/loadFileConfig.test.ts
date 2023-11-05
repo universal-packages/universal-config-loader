@@ -10,7 +10,8 @@ describe(loadFileConfig, (): void => {
       priority: {
         extra: 'yes',
         loaded: 'outfile',
-        nodeEnv: 'test'
+        nodeEnv: 'test',
+        evaluation: String(4000 + Number(process.env.JEST_WORKER_ID))
       }
     })
   })

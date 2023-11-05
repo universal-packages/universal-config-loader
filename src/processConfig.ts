@@ -1,5 +1,5 @@
 import { mapObject } from '@universal-packages/object-mapper'
-import { cleanOrphanReplaceable as cOR, replaceEnv } from '@universal-packages/variable-replacer'
+import { cleanOrphanReplaceable as cOR, evaluateAndReplace, replaceEnv } from '@universal-packages/variable-replacer'
 
 import { deepMergeConfig } from './deepMergeConfig'
 
@@ -21,6 +21,7 @@ export function processConfig(baseConfig: any, cleanOrphanReplaceable?: boolean,
 
     if (typeof value === 'string') {
       finalValue = replaceEnv(finalValue)
+      finalValue = evaluateAndReplace(finalValue)
       if (cleanOrphanReplaceable) finalValue = cOR(finalValue)
     }
 
