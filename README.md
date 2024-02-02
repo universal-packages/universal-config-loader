@@ -21,13 +21,9 @@ Given a configuration location reads deeply into it and get all the contents of 
 ```js
 import { loadConfig } from '@universal-packages/config-loader'
 
-async function test() {
-  const config = await loadConfig('./config')
+const config = loadConfig('./config')
 
-  console.log(config)
-}
-
-test()
+console.log(config)
 ```
 
 Lets say `./config` looks like this in disk:
@@ -75,13 +71,9 @@ We will end up with something like
   ```js
   import { loadConfig } from '@universal-packages/config-loader'
 
-  async function test() {
-    const config = await loadConfig('./config', { selectEnvironment: 'staging' })
+  const config = await loadConfig('./config', { selectEnvironment: 'staging' })
 
-    console.log(config)
-  }
-
-  test()
+  console.log(config)
   ```
 
   Lets say `./config/redis.yaml` looks like this:
@@ -126,13 +118,9 @@ Example if there are two files `jest.js` and `jest.yml` in your root directory t
 ```js
 import { loadFileConfig } from '@universal-packages/config-loader'
 
-async function test() {
-  const config = await loadConfig('./jest', { formatPriority: ['js', 'yml'] })
+const config = await loadConfig('./jest', { formatPriority: ['js', 'yml'] })
 
-  console.log(config)
-}
-
-test()
+console.log(config)
 ```
 
 ### Options

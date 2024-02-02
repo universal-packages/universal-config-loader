@@ -11,14 +11,14 @@ export const EXTENSIONS = ['json', 'yaml', 'yml', 'js', 'ts']
  * Traverse the provided configuration in disk and loads the content of all files
  * with the format `ts`, `js`, `json` or `yaml` and with the priority provided.
  */
-export async function loadConfig(location: string, options?: LoadConfigOptions): Promise<any> {
+export function loadConfig(location: string, options?: LoadConfigOptions): any {
   const finalOptions: LoadConfigOptions = { formatPriority: ['ts', 'js', 'json', 'yaml', 'yml'], ...options }
   const fileFilter = finalOptions.conventionPrefix ? new RegExp(`\.${finalOptions.conventionPrefix}\.(${EXTENSIONS.join('|')})$`, 'gm') : EXTENSIONS
 
-  const directoryMap = await traverse(location, { callback: finalOptions.callback, fileFilter, maxDepth: finalOptions.maxDepth })
+  const directoryMap = traverse(location, { callback: finalOptions.callback, fileFilter, maxDepth: finalOptions.maxDepth })
   const loadedConfig: any = {}
 
-  await recursivelyLoad(directoryMap, finalOptions, loadedConfig)
+  recursivelyLoad(directoryMap, finalOptions, loadedConfig)
 
   return loadedConfig
 }
@@ -27,7 +27,7 @@ export async function loadConfig(location: string, options?: LoadConfigOptions):
  * Go through all files and directories in a DirectoryMap object,
  * loads the content of the files, and merge them in the config object
  */
-async function recursivelyLoad(directoryMap: DirectoryMap, options: LoadConfigOptions, rootConfig: any): Promise<any> {
+function recursivelyLoad(directoryMap: DirectoryMap, options: LoadConfigOptions, rootConfig: any): any {
   const namesUsed: string[] = []
 
   // First we go through all files in the directory before going deeper
@@ -44,7 +44,7 @@ async function recursivelyLoad(directoryMap: DirectoryMap, options: LoadConfigOp
       const directoryLocation = path.dirname(directoryMap.files[i])
       // "home/example/config"
       const baseLocation = path.resolve(directoryLocation, baseFileName)
-      const loadedFromFile = await prioritizeFormatAndLoad(baseLocation, options.formatPriority)
+      const loadedFromFile = prioritizeFormatAndLoad(baseLocation, options.formatPriority)
       const finalConfig = processConfig(
         { ...loadedFromFile },
         options.cleanOrphanReplaceable,
@@ -75,6 +75,6 @@ async function recursivelyLoad(directoryMap: DirectoryMap, options: LoadConfigOp
       rootConfig[name] = {}
     }
 
-    await recursivelyLoad(directoryMap.directories[i], options, rootConfig[name])
+    recursivelyLoad(directoryMap.directories[i], options, rootConfig[name])
   }
 }

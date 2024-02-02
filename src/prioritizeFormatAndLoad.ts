@@ -13,7 +13,7 @@ const PARSERS_MAP = {
 }
 
 /** Based on a base file name it loads the format with the grater priority if exists */
-export async function prioritizeFormatAndLoad(baseLocation: string, formatPriority: FormatPriority): Promise<Record<string, any>> {
+export function prioritizeFormatAndLoad(baseLocation: string, formatPriority: FormatPriority): Record<string, any> {
   for (let i = 0; i < formatPriority.length; i++) {
     let finalLocation: string
 
@@ -24,12 +24,12 @@ export async function prioritizeFormatAndLoad(baseLocation: string, formatPriori
       continue
     }
 
-    return await PARSERS_MAP[formatPriority[i]](finalLocation)
+    return PARSERS_MAP[formatPriority[i]](finalLocation)
   }
 }
 
 /** Reads the contents of the file and try to parse them from JSON */
-async function parseJson(location: string): Promise<any> {
+function parseJson(location: string): any {
   try {
     return JSON.parse(fs.readFileSync(location).toString())
   } catch (error) {
@@ -40,7 +40,7 @@ async function parseJson(location: string): Promise<any> {
 }
 
 /** Reads the contents of the file and try to parse them from yml */
-async function parseYaml(location: string): Promise<any> {
+function parseYaml(location: string): any {
   try {
     return yaml.parse(fs.readFileSync(location).toString())
   } catch (error) {
@@ -51,8 +51,8 @@ async function parseYaml(location: string): Promise<any> {
 }
 
 /** Imports the file as a node module */
-async function loadJs(location: string): Promise<any> {
-  const module = await import(location)
+function loadJs(location: string): any {
+  const module = require(location)
 
-  return module['default']
+  return module.default || module
 }
