@@ -4,7 +4,7 @@ import { loadConfig } from '../src'
 
 describe(loadConfig, (): void => {
   it('loads recursively all data structures in a directory', async (): Promise<void> => {
-    const config = await loadConfig('./tests/__fixtures__/good')
+    const config = loadConfig('./tests/__fixtures__/good')
 
     expect(config).toEqual({
       'convention-prefix': {
@@ -49,7 +49,7 @@ describe(loadConfig, (): void => {
   })
 
   it('loads recursively all data structures in a directory with a prefix', async (): Promise<void> => {
-    const config = await loadConfig('./tests/__fixtures__/good', { conventionPrefix: 'prefix' })
+    const config = loadConfig('./tests/__fixtures__/good', { conventionPrefix: 'prefix' })
 
     expect(config).toEqual({
       'convention-prefix': {
@@ -75,7 +75,7 @@ describe(loadConfig, (): void => {
   })
 
   it('can be set a max depth', async (): Promise<void> => {
-    const config = await loadConfig('./tests/__fixtures__/good', { maxDepth: 0 })
+    const config = loadConfig('./tests/__fixtures__/good', { maxDepth: 0 })
 
     expect(config).toEqual({
       'convention-prefix': {},
@@ -97,7 +97,7 @@ describe(loadConfig, (): void => {
   })
 
   it('loads config and selects an environment', async (): Promise<void> => {
-    let config = await loadConfig('./tests/__fixtures__/environment', { selectEnvironment: 'development' })
+    let config = loadConfig('./tests/__fixtures__/environment', { selectEnvironment: 'development' })
 
     expect(config).toEqual({
       environment: {
@@ -109,13 +109,13 @@ describe(loadConfig, (): void => {
       }
     })
 
-    config = await loadConfig('./tests/__fixtures__/environment', { selectEnvironment: 'production' })
+    config = loadConfig('./tests/__fixtures__/environment', { selectEnvironment: 'production' })
 
     expect(config).toEqual({
       environment: { pops: 'yes', env: 'test', other: '{{ OTHER }}', deep: { value: 1 }, squash: 'yep' }
     })
 
-    config = await loadConfig('./tests/__fixtures__/environment', { selectEnvironment: true })
+    config = loadConfig('./tests/__fixtures__/environment', { selectEnvironment: true })
 
     expect(config).toEqual({
       environment: {
@@ -129,7 +129,7 @@ describe(loadConfig, (): void => {
   })
 
   it('loads config and cleans orphaned replaceable', async (): Promise<void> => {
-    let config = await loadConfig('./tests/__fixtures__/environment', { cleanOrphanReplaceable: true, selectEnvironment: 'development' })
+    let config = loadConfig('./tests/__fixtures__/environment', { cleanOrphanReplaceable: true, selectEnvironment: 'development' })
 
     expect(config).toEqual({
       environment: {
@@ -146,7 +146,7 @@ describe(loadConfig, (): void => {
     let error: Error
 
     try {
-      await loadConfig('./tests/__fixtures__/bad/ts')
+      loadConfig('./tests/__fixtures__/bad/ts')
     } catch (err) {
       error = err
     }
@@ -154,7 +154,7 @@ describe(loadConfig, (): void => {
     expect(error.message).toEqual('error is not a function')
 
     try {
-      await loadConfig('./tests/__fixtures__/bad/js')
+      loadConfig('./tests/__fixtures__/bad/js')
     } catch (err) {
       error = err
     }
@@ -162,7 +162,7 @@ describe(loadConfig, (): void => {
     expect(error.message).toEqual('error is not a function')
 
     try {
-      await loadConfig('./tests/__fixtures__/bad/json')
+      loadConfig('./tests/__fixtures__/bad/json')
     } catch (err) {
       error = err
     }
@@ -170,7 +170,7 @@ describe(loadConfig, (): void => {
     expect(error.message).toMatch(/Unexpected token .*\$.*; in file \".*\/tests\/__fixtures__\/bad\/json\/error.json"/)
 
     try {
-      await loadConfig('./tests/__fixtures__/bad/yaml')
+      loadConfig('./tests/__fixtures__/bad/yaml')
     } catch (err) {
       error = err
     }

@@ -4,7 +4,7 @@ import { loadFileConfig } from '../src'
 
 describe(loadFileConfig, (): void => {
   it('loads a single prioritized file', async (): Promise<void> => {
-    const config = await loadFileConfig('./tests/__fixtures__/good/out')
+    const config = loadFileConfig('./tests/__fixtures__/good/out')
 
     expect(config).toEqual({
       priority: {
@@ -17,7 +17,7 @@ describe(loadFileConfig, (): void => {
   })
 
   it(' selects an environment', async (): Promise<void> => {
-    let config = await loadFileConfig('./tests/__fixtures__/environment/environment', { selectEnvironment: 'development' })
+    let config = loadFileConfig('./tests/__fixtures__/environment/environment', { selectEnvironment: 'development' })
 
     expect(config).toEqual({
       pops: 'yes',
@@ -27,11 +27,11 @@ describe(loadFileConfig, (): void => {
       squash: 'nop'
     })
 
-    config = await loadFileConfig('./tests/__fixtures__/environment/environment', { selectEnvironment: 'production' })
+    config = loadFileConfig('./tests/__fixtures__/environment/environment', { selectEnvironment: 'production' })
 
     expect(config).toEqual({ pops: 'yes', env: 'test', other: '{{ OTHER }}', deep: { value: 1 }, squash: 'yep' })
 
-    config = await loadFileConfig('./tests/__fixtures__/environment/environment', { selectEnvironment: true })
+    config = loadFileConfig('./tests/__fixtures__/environment/environment', { selectEnvironment: true })
 
     expect(config).toEqual({
       pops: 'yes',
@@ -43,7 +43,7 @@ describe(loadFileConfig, (): void => {
   })
 
   it('loads config and cleans orphaned replaceable', async (): Promise<void> => {
-    const config = await loadFileConfig('./tests/__fixtures__/environment/environment', { cleanOrphanReplaceable: true, selectEnvironment: 'development' })
+    const config = loadFileConfig('./tests/__fixtures__/environment/environment', { cleanOrphanReplaceable: true, selectEnvironment: 'development' })
 
     expect(config).toEqual({
       pops: 'yes',
@@ -58,7 +58,7 @@ describe(loadFileConfig, (): void => {
     let error: Error
 
     try {
-      await loadFileConfig('./tests/__fixtures__/bad/ts/error')
+      loadFileConfig('./tests/__fixtures__/bad/ts/error')
     } catch (err) {
       error = err
     }
@@ -66,7 +66,7 @@ describe(loadFileConfig, (): void => {
     expect(error.message).toEqual('error is not a function')
 
     try {
-      await loadFileConfig('./tests/__fixtures__/bad/js/error')
+      loadFileConfig('./tests/__fixtures__/bad/js/error')
     } catch (err) {
       error = err
     }
@@ -74,7 +74,7 @@ describe(loadFileConfig, (): void => {
     expect(error.message).toEqual('error is not a function')
 
     try {
-      await loadFileConfig('./tests/__fixtures__/bad/json/error')
+      loadFileConfig('./tests/__fixtures__/bad/json/error')
     } catch (err) {
       error = err
     }
@@ -82,7 +82,7 @@ describe(loadFileConfig, (): void => {
     expect(error.message).toMatch(/Unexpected token .*\$.*; in file \".*\/tests\/__fixtures__\/bad\/json\/error.json"/)
 
     try {
-      await loadFileConfig('./tests/__fixtures__/bad/yaml/error')
+      loadFileConfig('./tests/__fixtures__/bad/yaml/error')
     } catch (err) {
       error = err
     }
