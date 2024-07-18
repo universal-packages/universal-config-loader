@@ -128,6 +128,30 @@ describe(loadConfig, (): void => {
     })
   })
 
+  it('loads config and selects an environment if configured and file root keys are environment like', async (): Promise<void> => {
+    let config = loadConfig('./tests/__fixtures__/environment-like', { selectEnvironment: 'development' })
+
+    expect(config).toEqual({
+      environment: {
+        deep: { test: 3 },
+        squash: 'nop'
+      }
+    })
+
+    config = loadConfig('./tests/__fixtures__/environment-like', { selectEnvironment: 'production' })
+
+    expect(config).toEqual({ environment: {} })
+
+    config = loadConfig('./tests/__fixtures__/environment-like', { selectEnvironment: true })
+
+    expect(config).toEqual({
+      environment: {
+        deep: { test: 2 },
+        squash: 'maybe'
+      }
+    })
+  })
+
   it('loads config and cleans orphaned replaceable', async (): Promise<void> => {
     let config = loadConfig('./tests/__fixtures__/environment', { cleanOrphanReplaceable: true, selectEnvironment: 'development' })
 

@@ -3,6 +3,8 @@ import { cleanOrphanReplaceable as cOR, evaluateAndReplace, replaceEnv } from '@
 
 import { deepMergeConfig } from './deepMergeConfig'
 
+const COMMON_ENVS = ['default', 'development', 'production', 'staging', 'test']
+
 /** Process loaded configuration replaces env variables and selects configurations by environment */
 export function processConfig(baseConfig: any, cleanOrphanReplaceable?: boolean, environment?: string): any {
   const configKeys = Object.keys(baseConfig)
@@ -10,7 +12,7 @@ export function processConfig(baseConfig: any, cleanOrphanReplaceable?: boolean,
 
   // If configured select an environment from the loaded from file config
   if (environment) {
-    if (configKeys.includes('default') || configKeys.includes(environment)) {
+    if (COMMON_ENVS.includes(environment) || configKeys.includes(environment)) {
       finalConfig = deepMergeConfig({ ...baseConfig.default }, baseConfig[environment])
     }
   }

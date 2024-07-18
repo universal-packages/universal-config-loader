@@ -1,0 +1,9 @@
+development:
+  squash: nop
+  deep:
+    test: 3
+
+test:
+  squash: maybe
+  deep:
+    test: 2
