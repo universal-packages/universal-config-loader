@@ -12,7 +12,9 @@ export function processConfig(baseConfig: any, cleanOrphanReplaceable?: boolean,
 
   // If configured select an environment from the loaded from file config
   if (environment) {
-    if (COMMON_ENVS.includes(environment) || configKeys.includes(environment)) {
+    const configKeysAreEnvironmentLike = configKeys.some((key) => COMMON_ENVS.includes(key))
+
+    if (configKeysAreEnvironmentLike || configKeys.includes(environment)) {
       finalConfig = deepMergeConfig({ ...baseConfig.default }, baseConfig[environment])
     }
   }

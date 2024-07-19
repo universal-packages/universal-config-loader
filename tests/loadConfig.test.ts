@@ -152,6 +152,28 @@ describe(loadConfig, (): void => {
     })
   })
 
+  it('loads config and gets the whole config if not environment like, even if environment was requested', async (): Promise<void> => {
+    let config = loadConfig('./tests/__fixtures__/environment-requested', { selectEnvironment: 'development' })
+
+    expect(config).toEqual({
+      environment: {
+        deep: { test: 3 },
+        squash: 'nop',
+        'no-env': true
+      }
+    })
+
+    config = loadConfig('./tests/__fixtures__/environment-requested', { selectEnvironment: 'production' })
+
+    expect(config).toEqual({
+      environment: {
+        deep: { test: 3 },
+        squash: 'nop',
+        'no-env': true
+      }
+    })
+  })
+
   it('loads config and cleans orphaned replaceable', async (): Promise<void> => {
     let config = loadConfig('./tests/__fixtures__/environment', { cleanOrphanReplaceable: true, selectEnvironment: 'development' })
 

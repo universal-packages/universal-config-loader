@@ -1,0 +1,4 @@
+squash: nop
+deep:
+  test: 3
+no-env: true
